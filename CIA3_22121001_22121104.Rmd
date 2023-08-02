@@ -1,0 +1,631 @@
+---
+title: "cia3"
+author: "Anshu Singh"
+date: "2023-04-28"
+output:
+  word_document: default
+  html_document: default
+  pdf_document: default
+runtime: shiny
+---
+
+
+
+```{r}
+install.packages("knitr")
+```
+
+```{r}
+install.packages("contrib.url")
+
+```
+```{r}
+install.packages("dplyr")
+```
+```{r}
+install.packages("tidyverse")
+```
+```{r}
+library(tidyverse)
+```
+
+
+```{r}
+# loading the the Data
+setwd("C:/Users/Admin/OneDrive/Desktop/R")
+Data=read.csv("Data.csv")
+Data
+```
+
+```{r}
+
+library(dplyr)
+# Example 1 
+sample_n(Data,3)
+
+```
+
+Uni variate Analysis of Variable
+
+```{r}
+distinct(Data)
+```
+
+```{r}
+is.na(Data)
+```
+```{r}
+duplicated(Data)
+```
+```{r}
+summary(Data)
+```
+```{r}
+install.packages("ggplot2")
+```
+```{r}
+library(ggplot2)
+```
+
+```{r}
+boxplot(Data$chanise.demand,col="#e8f48c")
+boxplot(Data$price,col="#e8f48c")
+boxplot(Data$TEU.USA,col="#e8f48c")
+boxplot(Data$demand,col="#e8f48c")
+boxplot(Data$GPRD,col="#e8f48c")
+boxplot(Data$GPRDACT,col="#e8f48c")
+boxplot(Data$GPRDTHREAT,col="#e8f48c")
+boxplot(Data$supply,col="#e8f48c")
+boxplot(Data$environment.regulation,col="#e8f48c")
+boxplot(Data$exchage.rate,col="#e8f48c")
+boxplot(Data$INFLATION.RATE,col="#e8f48c")
+boxplot(Data$minig.out.put,col="#e8f48c")
+boxplot(Data$spx,col="#e8f48c")
+```
+
+
+```{r}
+df <- data.frame (group = rep(c("chanise.demand","price","X","TEU.USA","X.1","GPRD", "GPRD_ACT","GPRD_THREAT","X.2","X.3","X.4","X.5","X.6","spx"), each = 50), 
+value = c(rnorm (50, mean =5,sd=1),
+rnorm (50, mean =8,sd=2)))
+
+ggplot(df, aes (x = group, y = value)) + geom_boxplot (color= "black",fill = "brown") + labs(title = "Box Plot")
+```
+
+
+
+```{r}
+#for chanise.demand
+outliers <- boxplot(Data$chanise.demand, plot = FALSE)$out
+data_clean <- Data$chanise.demand[!Data$chanise.demand %in% outliers]
+boxplot(data_clean,col="#7fff00")
+#for Price
+outliers1 <- boxplot(Data$price, plot = FALSE)$out
+data_clean1 <- Data$price[!Data$price %in% outliers1]
+boxplot(data_clean1,col="#7fff00")
+#for TEU.USA
+outliers2 <- boxplot(Data$TEU.USA, plot = FALSE)$out
+data_clean2 <- Data$TEU.USA[!Data$TEU.USA %in% outliers2]
+boxplot(data_clean2,col="#7fff00")
+#for demand
+outliers3 <- boxplot(Data$demand, plot = FALSE)$out
+data_clean3 <- Data$demand[!Data$demand %in% outliers3]
+boxplot(data_clean3,col="#7fff00")
+#for GPRD_ACT
+outliers4 <- boxplot(Data$GPRDACT, plot = FALSE)$out
+data_clean4 <- Data$GPRDACT[!Data$GPRDACT %in% outliers4]
+boxplot(data_clean4,col="#7fff00")
+#for GPRD_THREAT
+outliers5 <- boxplot(Data$GPRDTHREAT, plot = FALSE)$out
+data_clean5 <- Data$GPRDTHREAT[!Data$GPRDTHREAT %in% outliers5]
+boxplot(data_clean5,col="#7fff00")
+#for supply
+outliers6 <- boxplot(Data$supply, plot = FALSE)$out
+data_clean6 <- Data$supply[!Data$supply %in% outliers6]
+boxplot(data_clean6,col="#7fff00")
+#for environment.regulation
+outliers7 <- boxplot(Data$environment.regulation, plot = FALSE)$out
+data_clean7 <- Data$environment.regulation[!Data$environment.regulation %in% outliers7]
+boxplot(data_clean7,col="#7fff00")
+#for exchage.rate
+outliers8 <- boxplot(Data$exchage.rate, plot = FALSE)$out
+data_clean8 <- Data$exchage.rate[!Data$exchage.rate %in% outliers8]
+boxplot(data_clean8,col="#7fff00")
+#for INFLATION.RATE
+outliers9 <- boxplot(Data$INFLATION.RATE, plot = FALSE)$out
+data_clean9 <- Data$INFLATION.RATE[!Data$INFLATION.RATE %in% outliers9]
+boxplot(data_clean9,col="#7fff00")
+#for minig.out.put
+outliers10 <- boxplot(Data$minig.out.put, plot = FALSE)$out
+data_clean10 <- Data$minig.out.put[!Data$minig.out.put %in% outliers10]
+boxplot(data_clean10,col="#7fff00")
+#for spx
+outliers11 <- boxplot(Data$spx, plot = FALSE)$out
+data_clean11 <- Data$spx[!Data$spx %in% outliers11]
+boxplot(data_clean11,col="#7fff00")
+
+
+```
+ Bivariate Analysis of variable
+```{r}
+#a=data.frame(x=c(data_clean),y=c(data_clean1)
+#ggplot(a,aes(x,y)) + geom_point(color = "Red", size= 5) + labs(title = "ScatterPlot" )
+plot(Data$price, Data$TEU.USA, col = "#ef3038", xlab = "Price", ylab = "TEU USA", main = "price~TEU.USA")
+
+plot(Data$price, Data$chanise.demand, col = "#dda0dd", xlab = "Price", ylab = "TEU USA", main = "price~chanise.demand")
+
+plot(Data$price, Data$demand, col = "#7b68ee", xlab = "Price", ylab = "TEU USA", main = "price~demand")
+plot(Data$price, Data$GPRD, col = "#ef3038", xlab = "Price", ylab = "TEU USA", main = "price~GPRD")
+
+plot(Data$price, Data$GPRDACT, col = "#7b68ee", xlab = "Price", ylab = "TEU USA", main = "price~GPRDACT")
+plot(Data$price, Data$GPRDTHREAT, col = "#dda0dd", xlab = "Price", ylab = "TEU USA", main = "price~GPRDTHREAT")
+plot(Data$price, Data$supply, col = "#ef3038", xlab = "Price", ylab = "TEU USA", main = "price~supply")
+plot(Data$price, Data$environment.regulation, col = "#7b68ee", xlab = "Price", ylab = "TEU USA", main = "price~environment.regulation")
+plot(Data$price, Data$exchage.rate, col = "#ef3038", xlab = "Price", ylab = "TEU USA", main = "price~exchage.rate")
+plot(Data$price, Data$INFLATION.RATE, col = "#dda0dd", xlab = "Price", ylab = "TEU USA", main = "price~INFLATION.RATE")
+plot(Data$price, Data$minig.out.put, col = "#7b68ee", xlab = "Price", ylab = "TEU USA", main = "price~minig.out.put")
+plot(Data$price, Data$spx, col = "#ef3038", xlab = "Price", ylab = "TEU USA", main = "price~spx")
+
+```
+
+
+7. Cross Tab Analysis of relevant Variable
+
+```{r}
+mydata=data.frame(Data$GPRD,Data$GPRDACT)
+# Create a contingency table using xtabs()
+mytable=xtabs(~GPRD+GPRDACT,data=Data)
+# Print the contingency table
+print(mytable)
+barplot(mytable,col="#5865F2")
+
+```
+8. Statistical Analysis of Continuous Variable
+
+
+```{r}
+
+#TEU.USA
+summary(Data$TEU.USA)
+#supply
+summary(Data$supply)
+#demand
+summary(Data$demand)
+#environment.regulation
+summary(Data$environment.regulation)
+#chanise.demand
+summary(Data$chanise.demand)
+#exchage.rate
+summary(Data$exchage.rate)
+#INFLATION.RATE
+summary(Data$INFLATION.RATE)
+#minig.out.put
+summary(Data$minig.out.put)
+#Spx
+summary(Data$spx)
+#price
+summary(Data$price)
+```
+```{r}
+x = Data$chanise.demand
+mode_x = names(sort(table(x), decreasing = TRUE)[1])
+
+# Print the mode
+print(mode_x)
+
+x1 = Data$price
+mode_x1 = names(sort(table(x1), decreasing = TRUE)[1])
+
+# Print the mode
+print(mode_x1)
+x2 = Data$demand
+mode_x2 = names(sort(table(x2), decreasing = TRUE)[1])
+
+# Print the mode
+print(mode_x2)
+x3 = Data$supply
+mode_x3 = names(sort(table(x3), decreasing = TRUE)[1])
+
+# Print the mode
+print(mode_x3)
+x4 = Data$environment.regulation
+mode_x4 = names(sort(table(x4), decreasing = TRUE)[1])
+
+# Print the mode
+print(mode_x4)
+x5 = Data$TEU.USA
+mode_x5 = names(sort(table(x5), decreasing = TRUE)[1])
+
+# Print the mode
+print(mode_x5)
+x6 = Data$exchage.rate
+mode_x6 = names(sort(table(x6), decreasing = TRUE)[1])
+
+# Print the mode
+print(mode_x6)
+x7 = Data$INFLATION.RATE
+mode_x7 = names(sort(table(x7), decreasing = TRUE)[1])
+
+# Print the mode
+print(mode_x7)
+x8 = Data$spx
+mode_x8 = names(sort(table(x8), decreasing = TRUE)[1])
+
+# Print the mode
+print(mode_x8)
+x9 = Data$minig.out.put
+mode_x9 = names(sort(table(x9), decreasing = TRUE)[1])
+
+# Print the mode
+print(mode_x9)
+```
+
+```{r}
+sd <- sd(Data$price)
+var <- var(Data$price)
+cat("Standard deviation: price=", sd, "\n")
+cat("Variance:price=", var, "\n")
+
+sd1 <- sd(Data$demand)
+var1 <- var(Data$demand)
+cat("Standard deviation:demand=", sd1, "\n")
+cat("Variance:demand=", var1, "\n")
+
+sd2 <- sd(Data$TEU.USA)
+var2 <- var(Data$TEU.USA)
+cat("Standard deviation: TEU.USA)e=", sd2, "\n")
+cat("Variance:TEU.USA)=", var2, "\n")
+
+
+sd3 <- sd(Data$supply)
+var3 <- var(Data$supply)
+cat("Standard deviation: supply=", sd3, "\n")
+cat("Variance:supply=", var3, "\n")
+
+sd4 <- sd(Data$environment.regulation)
+var4 <- var(Data$environment.regulation)
+cat("Standard deviation: environment.regulation=", sd4, "\n")
+cat("Variance:environment.regulation=", var4, "\n")
+
+sd5 <- sd(Data$INFLATION.RATE)
+var5 <- var(Data$INFLATION.RATE)
+cat("Standard deviation: INFLATION.RATE=", sd5, "\n")
+cat("Variance:INFLATION.RATE=", var5, "\n")
+
+sd6 <- sd(Data$exchage.rate)
+var6 <- var(Data$exchage.rate)
+cat("Standard deviation: exchage.rate=", sd6, "\n")
+cat("Variance:exchage.rate =", var6, "\n")
+
+sd7 <- sd(Data$spx)
+var7 <- var(Data$spx)
+cat("Standard deviation:spx =", sd7, "\n")
+cat("Variance:spx =", var7, "\n")
+
+sd8 <- sd(Data$minig.out.put)
+var8 <- var(Data$minig.out.put)
+cat("Standard deviation:minig.out.put =", sd8, "\n")
+cat("Variance:minig.out.put =", var8, "\n")
+
+```
+
+9. Underlying Hypothesis
+
+Annova
+```{r}
+model <- aov(price ~ chanise.demand, data = Data)
+
+# Print the ANOVA table
+summary(model)
+
+
+model1 <- aov(price ~ demand, data = Data)
+
+# Print the ANOVA table
+summary(model1)
+
+model2 <- aov(price ~ TEU.USA, data = Data)
+
+# Print the ANOVA table
+summary(model2)
+model3 <- aov(price ~ supply, data = Data)
+
+# Print the ANOVA table
+summary(model3)
+model4 <- aov(price ~ environment.regulation, data = Data)
+
+# Print the ANOVA table
+summary(model4)
+model5 <- aov(price ~ exchage.rate, data = Data)
+
+# Print the ANOVA table
+summary(model5)
+model6 <- aov(price ~ INFLATION.RATE, data = Data)
+
+# Print the ANOVA table
+summary(model6)
+
+model7 <- aov(price ~ minig.out.put, data = Data)
+
+# Print the ANOVA table
+summary(model7)
+model8 <- aov(price ~ spx, data = Data)
+
+# Print the ANOVA table
+summary(model8)
+model9 <- aov(price ~ GPRD, data = Data)
+
+# Print the ANOVA table
+summary(model9)
+model10 <- aov(price ~ GPRDACT, data = Data)
+
+# Print the ANOVA table
+summary(model10)
+
+model11 <- aov(price ~ GPRDTHREAT, data = Data)
+
+# Print the ANOVA table
+summary(model11)
+
+```
+ Regration
+ 
+```{r}
+fit=lm(demand ~ price , data=Data)
+#view summary of model
+summary(fit)
+fit1=lm(chanise.demand ~ price , data=Data)
+#view summary of model
+summary(fit1)
+
+fit2=lm(TEU.USA ~ price , data=Data)
+#view summary of model
+summary(fit2)
+fit3=lm(supply ~ price , data=Data)
+#view summary of model
+summary(fit3)
+
+fit8=lm(GPRD ~ price , data=Data)
+#view summary of model
+summary(fit8)
+fit5=lm(GPRDACT ~ price , data=Data)
+#view summary of model
+summary(fit5)
+fit6=lm(GPRDTHREAT ~ price , data=Data)
+#view summary of model
+summary(fit6)
+fit7=lm(environment.regulation~ price , data=Data)
+#view summary of model
+summary(fit7)
+fit4=lm(exchage.rate ~ price , data=Data)
+#view summary of model
+summary(fit4)
+fit9=lm(minig.out.put ~ price , data=Data)
+#view summary of model
+summary(fit9)
+fit10=lm(INFLATION.RATE ~ price , data=Data)
+#view summary of model
+summary(fit10)
+fit11=lm(spx ~ price , data=Data)
+#view summary of model
+summary(fit11)
+
+```
+t-test
+```{r}
+t.test(Data$price,Data$demand, var.equal=FALSE)
+t.test(Data$price,Data$chanise.demand, var.equal=FALSE)
+t.test(Data$price,Data$supply, var.equal=FALSE)
+t.test(Data$price,Data$TEU.USA, var.equal=FALSE)
+t.test(Data$price,Data$environment.regulation, var.equal=FALSE)
+t.test(Data$price,Data$INFLATION.RATE, var.equal=FALSE)
+t.test(Data$price,Data$exchage.rate, var.equal=FALSE)
+t.test(Data$price,Data$GPRD, var.equal=FALSE)
+t.test(Data$price,Data$GPRDACT, var.equal=FALSE)
+t.test(Data$price,Data$GPRDTHREAT, var.equal=FALSE)
+t.test(Data$price,Data$minig.out.put, var.equal=FALSE)
+t.test(Data$price,Data$spx, var.equal=FALSE)
+```
+
+10. Multicollinearity Analysis
+
+```{r}
+install.packages("olsrr")
+
+```
+```{r}
+library("olsrr")
+```
+
+
+```{r}
+# Fit a linear regression model for mpg on cyl, disp, and hp
+m=lm(price ~ demand + chanise.demand + supply + TEU.USA + GPRDACT  , data = Data)
+
+# Calculate VIF for each predictor
+olsviftol<- round(1 / (1 - summary(m)$r.squared), 2)
+
+# Compute the variance inflation factors (VIF)
+olsviftol
+```
+```{r}
+# Residual analysis
+plot(model1, which = 1) # Residuals vs Fitted
+plot(model3, which = 2) # Normal Q-Q plot
+plot(model5, which = 3) # Scale-Location plot
+plot(model10, which = 4) # Residuals vs Leverage
+```
+
+
+11. Correlations Analysis
+```{r}
+install.packages("corrplot")
+```
+
+```{r}
+library(corrplot)
+
+# Compute the correlation matrix
+corr_matrix <- cor(Data[c("price","demand","GPRD","GPRDACT","GPRDTHREAT","environment.regulation","minig.out.put" )])
+
+# Create the correlation plot
+corrplot(corr_matrix, method = "circle", type = "upper", tl.col = "black")
+
+```
+
+12.Feature Selection
+```{r}
+base.mod =lm(price ~ demand + chanise.demand + supply + TEU.USA + GPRD + GPRDACT + GPRDTHREAT + environment.regulation + exchage.rate + INFLATION.RATE + minig.out.put + spx , data = Data)
+
+# base intercept only model
+all.mod=lm(price ~ demand + chanise.demand + supply + TEU.USA + GPRD + GPRDACT + GPRDTHREAT + environment.regulation + exchage.rate + INFLATION.RATE + minig.out.put + spx , data = Data) # full model with all predictors
+
+stepMod <- step(base.mod, scope = list(lower = base.mod, upper = all.mod), direction = "both", trace = 0, steps = 1000)  # perform step-wise algorithm
+
+shortlistedVars <- names(unlist(stepMod[[1]])) # get the shortlisted variable.
+
+shortlistedVars <- shortlistedVars[!shortlistedVars %in% "(Intercept)"]  # remove intercept 
+print(shortlistedVars)
+```
+
+
+13. Modelling Method Applied (Linear Regression) using different data transformation technique
+```{r}
+install.packages("ggpubr")
+```
+```{r}
+library(ggpubr)
+```
+
+```{r}
+install.packages("MASS")
+```
+
+```{r}
+library(MASS)
+```
+```{r}
+cor(Data$demand,Data$price)
+cor(Data$supply,Data$price)
+cor(Data$TEU.USA,Data$price)
+cor(Data$GPRD,Data$price)
+```
+
+```{r}
+
+# Create the QQ plot
+qqnorm("demand","price", Data)
+title("QQ Plot")
+xlab("demand")
+ylab("price")
+
+
+```
+
+
+
+```{r}
+m1 <- lm(price ~ demand +  supply + exchage.rate + GPRDTHREAT, data = Data)
+summary(m1)
+
+# Get the coefficients for the model
+coef(m1)
+boxcox(m1, lambda = seq(-2,2,0.1),)
+```
+```{r}
+library(dplyr)
+
+ols_to_log<-c("demand","supply","TEU.USA","minig.out.put")
+
+# Apply the logarithm to the selected columns
+log_data <- Data%>%
+  mutate(across(all_of(cols_to_log),log))
+# Print the results
+print(log_data)
+```
+
+
+
+14. Residual Analysis
+```{r}
+residuals <- resid(m1)
+
+# Plot the residuals against the fitted values
+plot(fitted(m1), residuals, 
+     xlab = "Fitted Values", ylab = "Residuals",
+     main = "Residual Plot" , col="#E9AB17")
+
+# Add a horizontal line at y = 0 for reference
+abline(h=0)
+```
+
+15. Model Diagnostics
+
+```{r}
+install.packages("shiny")
+
+```
+
+```{r}
+library(shiny)
+library(ggplot2)
+
+# Define UI
+ui <- fluidPage(
+  titlePanel("Predicted Copper Price Calculator"),
+  sidebarLayout(
+    sidebarPanel(
+      numericInput("ad_spend", "Advertising Spend:", value = 50),
+      numericInput("num_stores", "Number of Stores:", value = 100),
+      numericInput("avg_price", "Average Price of Products:", value=200),
+      numericInput("store_size", "Store Size:", value = 500),
+      numericInput("cust_satisfaction", "Customer Satisfaction:", value = 75),
+      numericInput("sales_promotions", "Sales Promotions:", value = 150),
+      numericInput("ecommerce_presence", "E-commerce Presence:", value = 300),
+      numericInput("num_competitors", "Number of Competitors:", value = 600),
+      numericInput("seasonality", "Seasonality:", value = 90),
+      numericInput("economic_indicators", "Economic Indicators:", value = 180),
+      numericInput("product_variety", "Product Variety:", value =360),
+      numericInput("brand_reputation", "Brand Reputation:", value =720),
+      actionButton("calculate", "Calculate Predicted Copper Price")
+    ),
+    mainPanel(
+      plotOutput("diagnostic_plot")
+    )
+  )
+)
+
+# Define server
+server <- function(input, output) {
+  
+  # Reactive expression for predicted copper price
+  predicted_price <- reactive({
+    req(input$calculate)
+    
+    # Model based on input variables
+    copper_price <- input$ad_spend * 0.1 + input$num_stores * 0.5 + input$avg_price * 0.2 +
+      input$store_size * 0.3 + input$cust_satisfaction * 0.15 + input$sales_promotions * 0.2 +
+      input$ecommerce_presence * 0.1 + input$num_competitors * 0.05 + input$seasonality * 0.3 +
+      input$economic_indicators * 0.2 + input$product_variety * 0.15 + input$brand_reputation * 0.1
+    
+    copper_price
+  })
+  
+  # Render diagnostic plot
+  output$diagnostic_plot <- renderPlot({
+    # Plot predicted copper price vs. input variables
+    ggplot(data.frame(x = predicted_price(), y = c(input$ad_spend, input$num_stores, input$avg_price,
+                                                   input$store_size, input$cust_satisfaction, input$sales_promotions,
+                                                   input$ecommerce_presence, input$num_competitors, input$seasonality,
+                                                   input$economic_indicators, input$product_variety, input$brand_reputation)), 
+           aes(x = x, y = y)) +
+      geom_point() +
+      labs(x = "Predicted Copper Price", y = "Input Variables")
+  })
+}
+
+# Run the app
+shinyApp(ui, server)
+
+```
+
